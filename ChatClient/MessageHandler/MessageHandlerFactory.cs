@@ -10,6 +10,8 @@
                     return new ChatMessageHandler();
                 case 4:
                     return new ConnectResponseMessageHandler();
+                case 5:
+                    return new UserCountMessageHandler();
             }
 
             return null;
