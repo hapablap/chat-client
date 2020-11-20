@@ -74,9 +74,11 @@ namespace ChatClient
             try
             {
                 // Prepare chat message
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.Content = messageContent;
-                chatMessage.SessionId = SessionId;
+                ChatMessage chatMessage = new ChatMessage
+                {
+                    Content = messageContent,
+                    SessionId = SessionId
+                };
 
                 // Send message
                 SendMessage(JsonSerializer.Serialize(chatMessage));
