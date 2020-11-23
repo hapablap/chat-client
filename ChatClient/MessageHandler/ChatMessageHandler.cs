@@ -14,7 +14,7 @@ namespace ChatClient.MessageHandler
             if (user != null)
                 username = user.Username;
 
-            Console.WriteLine($"{username}: {chatMessage.Content}");
+            Console.WriteLine($"{username} [{DateTime.Now}]: {chatMessage.Content}");
         }
     }
 }
