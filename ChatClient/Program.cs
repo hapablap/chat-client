@@ -1,6 +1,7 @@
 ﻿using ChatClient.MessageHandler;
 using ChatProtocol;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading;
@@ -19,6 +20,8 @@ namespace ChatClient
         public static bool IsApplicationExecuting = true;
 
         static Thread receiveDataThread;
+
+        public static List<User> Users = new List<User>();
 
         static void Connect(string username, string password)
         {
@@ -51,6 +54,15 @@ namespace ChatClient
             SessionId = string.Empty;
             client.Close();
             client = null;
+        }
+
+        public static void RequestUserList()
+        {
+            UserListRequestMessage userListRequestMessage = new UserListRequestMessage
+            {
+                SessionId = SessionId
+            };
+            SendMessage(JsonSerializer.Serialize(userListRequestMessage));
         }
 
         public static void StopReceiveDataThread()

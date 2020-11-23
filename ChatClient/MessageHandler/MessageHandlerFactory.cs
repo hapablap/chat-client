@@ -12,6 +12,8 @@
                     return new ConnectResponseMessageHandler();
                 case 5:
                     return new UserCountMessageHandler();
+                case 7:
+                    return new UserListResponseMessageHandler();
             }
 
             return null;
