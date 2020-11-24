@@ -23,6 +23,20 @@ namespace ChatClient
 
         public static List<User> Users = new List<User>();
 
+        static void Register(string username, string password)
+        {
+            client = new TcpClient(serverIpAddress, serverPort);
+
+            var registerMessage = new UserRegisterMessage
+            {
+                Username = username,
+                Password = password
+            };
+
+            StartReceiveDataThread();
+            SendMessage(JsonSerializer.Serialize(registerMessage));
+        }
+
         static void Connect(string username, string password)
         {
             IsConnecting = true;
@@ -67,7 +81,8 @@ namespace ChatClient
 
         public static void StopReceiveDataThread()
         {
-            receiveDataThread.Interrupt();
+            if(receiveDataThread != null)
+                receiveDataThread.Join();
         }
 
         public static void StartReceiveDataThread()
@@ -93,7 +108,7 @@ namespace ChatClient
                 {
                     lock (client)
                     {
-                        var data = new byte[256];
+                        var data = new byte[1024];
                         var bytes = client.GetStream().Read(data, 0, data.Length);
                         var responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
                         var genericMessage = JsonSerializer.Deserialize<GenericMessage>(responseData);
@@ -137,40 +152,63 @@ namespace ChatClient
         {
             while (IsApplicationExecuting)
             {
-                Console.Clear();
+                Console.WriteLine("Do you want to login (l) or to register (r)?");
+                var loginRegisterInput = Console.ReadKey();
 
-                Console.WriteLine("Username: ");
-                var username = Console.ReadLine();
-
-                Console.WriteLine("Password: ");
-                var password = Console.ReadLine();
-
-                Console.WriteLine("Connecting to server.");
-                Connect(username, password);
-
-                while (IsConnecting)
+                if (loginRegisterInput.Key == ConsoleKey.L)
                 {
+                    Console.Clear();
 
+                    Console.WriteLine("Login");
+
+                    Console.WriteLine("Username: ");
+                    var username = Console.ReadLine();
+
+                    Console.WriteLine("Password: ");
+                    var password = Console.ReadLine();
+
+                    Console.WriteLine("Connecting to server.");
+                    Connect(username, password);
+
+                    while (IsConnecting)
+                    {
+
+                    }
+
+                    while (IsConnected)
+                    {
+                        Console.WriteLine("Nachricht eingeben:");
+                        var input = Console.ReadLine();
+
+                        switch (input)
+                        {
+                            case "/disconnect":
+                                Disconnect();
+                                break;
+                            case "/exit":
+                                Disconnect();
+                                IsApplicationExecuting = false;
+                                break;
+                            default:
+                                SendChatMessage(input);
+                                break;
+                        }
+                    }
                 }
 
-                while (IsConnected)
+                if(loginRegisterInput.Key == ConsoleKey.R)
                 {
-                    Console.WriteLine("Nachricht eingeben:");
-                    var input = Console.ReadLine();
+                    Console.Clear();
 
-                    switch (input)
-                    {
-                        case "/disconnect":
-                            Disconnect();
-                            break;
-                        case "/exit":
-                            Disconnect();
-                            IsApplicationExecuting = false;
-                            break;
-                        default:
-                            SendChatMessage(input);
-                            break;
-                    }
+                    Console.WriteLine("Register");
+
+                    Console.WriteLine("Username: ");
+                    var username = Console.ReadLine();
+
+                    Console.WriteLine("Password: ");
+                    var password = Console.ReadLine();
+
+                    Register(username, password);
                 }
             }
         }

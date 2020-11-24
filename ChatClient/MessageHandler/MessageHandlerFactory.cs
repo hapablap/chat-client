@@ -14,6 +14,8 @@
                     return new UserCountMessageHandler();
                 case 7:
                     return new UserListResponseMessageHandler();
+                case 9:
+                    return new UserRegisterResponseMessageHandler();
             }
 
             return null;
