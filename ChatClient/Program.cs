@@ -28,7 +28,7 @@ namespace ChatClient
             IsConnecting = true;
             client = new TcpClient(serverIpAddress, serverPort);
 
-            ConnectMessage connectMessage = new ConnectMessage
+            var connectMessage = new ConnectMessage
             {
                 ServerPassword = "test123",
                 Username = username,
@@ -41,7 +41,7 @@ namespace ChatClient
 
         static void Disconnect()
         {
-            DisconnectMessage disconnectMessage = new DisconnectMessage()
+            var disconnectMessage = new DisconnectMessage()
             {
                 SessionId = SessionId
             };
@@ -58,7 +58,7 @@ namespace ChatClient
 
         public static void RequestUserList()
         {
-            UserListRequestMessage userListRequestMessage = new UserListRequestMessage
+            var userListRequestMessage = new UserListRequestMessage
             {
                 SessionId = SessionId
             };
@@ -72,7 +72,7 @@ namespace ChatClient
 
         public static void StartReceiveDataThread()
         {
-            ThreadStart threadStart = new ThreadStart(ReceiveData);
+            var threadStart = new ThreadStart(ReceiveData);
             receiveDataThread = new Thread(threadStart);
             receiveDataThread.Start();
         }
@@ -80,8 +80,8 @@ namespace ChatClient
         static void SendMessage(string messageJson)
         {
             // Verschlüsselung: messageJson verschlüsseln
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(messageJson);
-            NetworkStream stream = client.GetStream();
+            var data = System.Text.Encoding.UTF8.GetBytes(messageJson);
+            var stream = client.GetStream();
             stream.Write(data, 0, data.Length);
         }
 
@@ -93,12 +93,12 @@ namespace ChatClient
                 {
                     lock (client)
                     {
-                        byte[] data = new byte[256];
-                        int bytes = client.GetStream().Read(data, 0, data.Length);
-                        string responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-                        GenericMessage genericMessage = JsonSerializer.Deserialize<GenericMessage>(responseData);
-                        IMessage message = MessageFactory.GetMessage(genericMessage.MessageId, responseData);
-                        IMessageHandler messageHandler = MessageHandlerFactory.GetMessageHandler(genericMessage.MessageId);
+                        var data = new byte[256];
+                        var bytes = client.GetStream().Read(data, 0, data.Length);
+                        var responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+                        var genericMessage = JsonSerializer.Deserialize<GenericMessage>(responseData);
+                        var message = MessageFactory.GetMessage(genericMessage.MessageId, responseData);
+                        var messageHandler = MessageHandlerFactory.GetMessageHandler(genericMessage.MessageId);
                         messageHandler.Execute(client, message);
                     }
                 }
@@ -114,7 +114,7 @@ namespace ChatClient
             try
             {
                 // Prepare chat message
-                ChatMessage chatMessage = new ChatMessage
+                var chatMessage = new ChatMessage
                 {
                     Content = messageContent,
                     SessionId = SessionId
@@ -140,10 +140,10 @@ namespace ChatClient
                 Console.Clear();
 
                 Console.WriteLine("Username: ");
-                string username = Console.ReadLine();
+                var username = Console.ReadLine();
 
                 Console.WriteLine("Password: ");
-                string password = Console.ReadLine();
+                var password = Console.ReadLine();
 
                 Console.WriteLine("Connecting to server.");
                 Connect(username, password);
@@ -156,7 +156,7 @@ namespace ChatClient
                 while (IsConnected)
                 {
                     Console.WriteLine("Nachricht eingeben:");
-                    string input = Console.ReadLine();
+                    var input = Console.ReadLine();
 
                     switch (input)
                     {

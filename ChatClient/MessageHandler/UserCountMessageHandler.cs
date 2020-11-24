@@ -8,7 +8,7 @@ namespace ChatClient.MessageHandler
     {
         public void Execute(TcpClient client, IMessage message)
         {
-            UserCountMessage userCountMessage = message as UserCountMessage;
+            var userCountMessage = message as UserCountMessage;
             Console.WriteLine($"Users (online / sum): {userCountMessage.UserOnlineCount} / {userCountMessage.UserCount}");
         }
     }

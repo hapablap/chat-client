@@ -8,7 +8,7 @@ namespace ChatClient.MessageHandler
     {
         public void Execute(TcpClient client, IMessage message)
         {
-            ConnectResponseMessage connectResponseMessage = message as ConnectResponseMessage;
+            var connectResponseMessage = message as ConnectResponseMessage;
             if (connectResponseMessage.Success)
             {
                 Program.IsConnected = true;

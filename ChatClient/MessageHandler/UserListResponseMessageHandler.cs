@@ -9,7 +9,7 @@ namespace ChatClient.MessageHandler
     {
         public void Execute(TcpClient client, IMessage message)
         {
-            UserListResponseMessage userListResponseMessage = message as UserListResponseMessage;
+            var userListResponseMessage = message as UserListResponseMessage;
             Program.Users = JsonSerializer.Deserialize<List<User>>(userListResponseMessage.UserListJson);
         }
     }
