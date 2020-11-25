@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferencedAssemblies", "Ref
 		ReferencedAssemblies\ChatProtocol.dll = ReferencedAssemblies\ChatProtocol.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{BEFD6B06-61CB-4C8C-ACFA-B3D2C1A48A24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{687AF917-21CC-4D09-8060-E2626704920A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{687AF917-21CC-4D09-8060-E2626704920A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{687AF917-21CC-4D09-8060-E2626704920A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFD6B06-61CB-4C8C-ACFA-B3D2C1A48A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFD6B06-61CB-4C8C-ACFA-B3D2C1A48A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFD6B06-61CB-4C8C-ACFA-B3D2C1A48A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFD6B06-61CB-4C8C-ACFA-B3D2C1A48A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
