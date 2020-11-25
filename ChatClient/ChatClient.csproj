@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Reference Include="ChatProtocol">
-      <HintPath>..\..\ChatServer\ChatProtocol\bin\Debug\netcoreapp3.1\ChatProtocol.dll</HintPath>
+      <HintPath>..\ReferencedAssemblies\ChatProtocol.dll</HintPath>
     </Reference>
   </ItemGroup>
 
